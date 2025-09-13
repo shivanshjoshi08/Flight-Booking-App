@@ -1,65 +1,214 @@
-/* === Search Box Tabs === */
+/* ======================================================= */
+/* === UNITED AIRLINES THEME - COMPLETE STYLESHEET === */
+/* ======================================================= */
+
+/* 1. NAYE COLORS AUR GLOBAL STYLES */
+:root {
+  --united-blue: #002244;       /* Dark Navy Blue for Header/Buttons */
+  --united-link-blue: #0057b8;  /* Lighter blue for links */
+  --background-color: #f4f7f9;
+  --card-background: #ffffff;
+  --text-color: #333333;
+  --text-light: #6d6d6d;
+  --border-color: #cccccc;
+  --box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  --border-radius: 8px; /* Thoda kam rounded */
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: var(--background-color);
+  margin: 0;
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+/* 2. HEADER KO UNITED JAISA BANAYEIN */
+.app-header {
+  background-color: var(--united-blue);
+  padding: 10px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-header .logo {
+  font-size: 2em;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.app-header nav a {
+  margin-left: 30px;
+  text-decoration: none;
+  color: #e0e0e0;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.app-header nav a:hover {
+  color: #ffffff;
+}
+
+/* 3. HERO SECTION MEIN BACKGROUND IMAGE LAGAYEIN */
+.hero-section {
+  padding: 60px 20px;
+  /* IMPORTANT: Yahan apni background image ka URL daalein */
+  background-image: url('https://images.unsplash.com/photo-1570710891163-6d3b5b47248b?q=80&w=2070');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+/* Image par halka dark overlay */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.2);
+}
+.hero-title, .search-box {
+    position: relative; /* Overlay ke upar laane ke liye */
+    z-index: 2;
+}
+
+
+/* 4. SEARCH BOX KA NAYA DESIGN */
+.search-box {
+  width: 100%;
+  max-width: 850px;
+  background: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+}
+
 .search-box-tabs {
-    display: flex;
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 1rem;
+  display: flex;
+  background-color: var(--united-blue);
 }
 
 .tab-btn {
-    padding: 0.75rem 1.25rem;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #4a5568;
-    position: relative;
-    bottom: -1px; /* To align with the bottom border */
+  flex-basis: 120px; /* Sab tabs ko fixed width di */
+  padding: 18px 15px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #5a6a7e; /* Inactive tab color */
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
 }
 
 .tab-btn.active {
-    color: #0057b8;
-    border-bottom: 3px solid #0057b8;
+  background-color: var(--united-blue); /* Active tab color */
 }
 
-/* === Advanced Form Options === */
+.tab-content {
+  padding: 25px;
+}
+
 .trip-options {
-    display: flex;
-    gap: 1.5rem; /* space between radio buttons */
-    margin-bottom: 1rem;
-    justify-content: flex-start;
-    align-items: center;
+  display: flex;
+  gap: 25px;
+  margin-bottom: 20px;
+  color: var(--text-color);
+  font-weight: 500;
 }
 
-.trip-options label {
+/* Form ka layout Grid mein change kiya */
+.flight-search-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-light);
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* From-To ke beech mein swap icon */
+.from-to-group {
     display: flex;
     align-items: center;
-    gap: 0.5rem; /* space between radio and text */
-    cursor: pointer;
+    position: relative;
+    grid-column: 1 / -1; /* Yeh poori row lega */
 }
+.from-to-group .form-group { flex: 1; }
 
 .swap-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.swap-icon:hover {
-    background-color: #f0f2f5;
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--united-link-blue);
+  font-size: 1rem;
+  margin: 0 10px;
+  margin-top: 20px;
 }
 
-.form-row {
-    position: relative; /* For swap icon positioning */
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: 1fr 1fr;
+/* --- Buttons ko United jaisa banayein --- */
+.form-actions {
+    grid-column: 1 / -1; /* Yeh bhi poori row lega */
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-primary {
+  background-color: var(--united-blue);
+  color: white;
+  border: none;
+  border-radius: 20px; /* Pill shape button */
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 12px 30px;
+  transition: background-color 0.3s ease;
+}
+.btn-primary:hover { background-color: #001122; }
+
+/* Secondary outline button */
+.btn-secondary-outline {
+    background-color: transparent;
+    color: var(--united-blue);
+    border: 2px solid var(--united-blue);
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 12px 30px;
+    transition: all 0.3s ease;
+}
+.btn-secondary-outline:hover { background-color: #eef5ff; }
+
+.advanced-search-link {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+    color: var(--united-link-blue);
+    text-decoration: none;
+    text-align: center;
 }
