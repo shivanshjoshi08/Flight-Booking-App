@@ -1,13 +1,13 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
-// Link import abhi use nahi ho raha hai, but future ke liye rakh sakte hain
-// import { Link } from 'react-router-dom'; 
 import { AuthContext } from '../context/AuthContext';
+
+// API ka base URL yahan define karein (environment variable se)
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://flight-booking-app-t010.onrender.com';
 
 function FlightSearch() {
   const { token } = useContext(AuthContext);
-
-  // --- States ---
+  // ... (aapke saare states same rahenge)
   const [activeTab, setActiveTab] = useState('Flight');
   const [tripType, setTripType] = useState('oneway');
   const [origin, setOrigin] = useState('');
@@ -15,56 +15,35 @@ function FlightSearch() {
   const [flights, setFlights] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
-
-  // --- Naye States jo missing the ---
   const [departureDate, setDepartureDate] = useState('');
   const [travelers, setTravelers] = useState('1 Adult');
   const [cabinClass, setCabinClass] = useState('Economy');
+
 
   const handleSearch = async (e) => {
     e.preventDefault();
     setLoading(true);
     setSearched(true);
-    setFlights([]); // Purane results clear karein
+    setFlights([]);
     try {
-      // API call mein naye parameters bhi bhej sakte hain
-      const response = await axios.get('https://flight-booking-app-t010.onrender.com/api/flights', {
-        params: {
-          origin,
-          destination,
-          // date: departureDate, // Uncomment karein jab backend ready ho
-          // travelers: travelers, // Uncomment karein jab backend ready ho
-        }
+      const response = await axios.get(`${API_BASE_URL}/api/flights`, { // <-- Yahan badlaav kiya hai
+        params: { origin, destination }
       });
       setFlights(response.data);
     } catch (err) {
       console.error("Error fetching flights:", err);
-      // User ko error dikhane ke liye yahan state set kar sakte hain
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSwap = () => {
-    // Origin aur Destination ko aapas mein badalne ka logic
-    const temp = origin;
-    setOrigin(destination);
-    setDestination(temp);
-  };
-
   const handleBooking = async (flightId) => {
-    // Yeh function flight book karega
     if (!token) {
       alert("Please login to book a flight.");
-      // Yahan aap user ko login page par redirect kar sakte hain
       return;
     }
-    // alert(`Booking flight with ID: ${flightId}. API call yahan se jaayegi.`);
-
     try {
-      const API_URL = import.meta.env.VITE_API_URL;
-
-      const response = await axios.post('https://flight-booking-app-t010.onrender.com/api/book',
+      await axios.post(`${API_BASE_URL}/api/book`, // <-- Yahan bhi badlaav kiya hai
         { flightId },
         { headers: { 'Authorization': `Bearer ${token}` } }
       );
@@ -75,8 +54,17 @@ function FlightSearch() {
     }
   };
 
+  // ... (handleSwap function same rahega)
+  const handleSwap = () => {
+    const temp = origin;
+    setOrigin(destination);
+    setDestination(temp);
+  };
+
+  // --- JSX (return statement) mein koi badlaav nahi ---
   return (
     <>
+      {/* ... Aapka poora JSX code yahan same rahega ... */}
       <div className="hero-section">
         <h1 className="hero-title">Find your next destination</h1>
         <div className="search-box">
