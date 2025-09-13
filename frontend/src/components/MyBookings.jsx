@@ -14,7 +14,7 @@ function MyBookings() {
 
     const fetchBookings = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:5000/api/my-bookings', {
+        const response = await axios.get('https://flight-booking-app-t010.onrender.com/api/my-bookings', {
           headers: {
             'Authorization': `Bearer ${token}`
           }

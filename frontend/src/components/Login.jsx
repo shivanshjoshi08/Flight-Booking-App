@@ -16,7 +16,7 @@ function Login() {
     e.preventDefault();
     setMessage('');
     try {
-      const response = await axios.post('http://127.0.0.1:5000/api/auth/login', { email, password });
+      const response = await axios.post('https://flight-booking-app-t010.onrender.com/api/auth/login', { email, password });
       // Context wale login function ko token ke saath call karein
       login(response.data.access_token);
       navigate('/'); 

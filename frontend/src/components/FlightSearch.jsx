@@ -28,13 +28,13 @@ function FlightSearch() {
     setFlights([]); // Purane results clear karein
     try {
       // API call mein naye parameters bhi bhej sakte hain
-      const response = await axios.get('http://127.0.0.1:5000/api/flights', { 
-        params: { 
-          origin, 
+      const response = await axios.get('https://flight-booking-app-t010.onrender.com/api/flights', {
+        params: {
+          origin,
           destination,
           // date: departureDate, // Uncomment karein jab backend ready ho
           // travelers: travelers, // Uncomment karein jab backend ready ho
-        } 
+        }
       });
       setFlights(response.data);
     } catch (err) {
@@ -55,21 +55,24 @@ function FlightSearch() {
   const handleBooking = async (flightId) => {
     // Yeh function flight book karega
     if (!token) {
-        alert("Please login to book a flight.");
-        // Yahan aap user ko login page par redirect kar sakte hain
-        return;
+      alert("Please login to book a flight.");
+      // Yahan aap user ko login page par redirect kar sakte hain
+      return;
     }
-    alert(`Booking flight with ID: ${flightId}. API call yahan se jaayegi.`);
-    // try {
-    //   const response = await axios.post('http://127.0.0.1:5000/api/book', 
-    //     { flightId },
-    //     { headers: { 'Authorization': `Bearer ${token}` } }
-    //   );
-    //   alert("Booking successful!");
-    // } catch (err) {
-    //   console.error("Booking failed:", err);
-    //   alert("Booking failed. Please try again.");
-    // }
+    // alert(`Booking flight with ID: ${flightId}. API call yahan se jaayegi.`);
+
+    try {
+      const API_URL = import.meta.env.VITE_API_URL;
+
+      const response = await axios.post('https://flight-booking-app-t010.onrender.com/api/book',
+        { flightId },
+        { headers: { 'Authorization': `Bearer ${token}` } }
+      );
+      alert("Booking successful!");
+    } catch (err) {
+      console.error("Booking failed:", err);
+      alert("Booking failed. Please try again.");
+    }
   };
 
   return (
@@ -116,18 +119,18 @@ function FlightSearch() {
                     <label htmlFor="date">Date</label>
                     <input type="date" id="date" value={departureDate} onChange={(e) => setDepartureDate(e.target.value)} required />
                   </div>
-                  
+
                   <div className="form-group">
                     <label htmlFor="travelers">Travelers</label>
                     <input type="text" id="travelers" value={travelers} onChange={(e) => setTravelers(e.target.value)} required />
                   </div>
-                  
+
                   <div className="form-group" style={{ gridColumn: '1 / -1' }}> {/* Yeh poori width lega */}
                     <label htmlFor="cabin">Class</label>
                     <select id="cabin" value={cabinClass} onChange={(e) => setCabinClass(e.target.value)}>
-                        <option value="Economy">Economy</option>
-                        <option value="Business">Business</option>
-                        <option value="First">First</option>
+                      <option value="Economy">Economy</option>
+                      <option value="Business">Business</option>
+                      <option value="First">First</option>
                     </select>
                   </div>
 
@@ -137,7 +140,7 @@ function FlightSearch() {
                     </button>
                   </div>
                 </div>
-                
+
                 <a href="#" className="advanced-search-link">Advanced search</a>
               </form>
             )}
@@ -158,13 +161,13 @@ function FlightSearch() {
               {flights.map((flight) => (
                 <div key={flight.id} className="flight-card">
                   <div className="flight-details">
-                      <h4>{flight.airline} ({flight.flight_number})</h4>
-                      <p>{flight.origin} → {flight.destination}</p>
-                      <p>Departs: {flight.departure_time} | Arrives: {flight.arrival_time}</p>
+                    <h4>{flight.airline} ({flight.flight_number})</h4>
+                    <p>{flight.origin} → {flight.destination}</p>
+                    <p>Departs: {flight.departure_time} | Arrives: {flight.arrival_time}</p>
                   </div>
                   <div className="flight-price">
-                      <h3>₹{flight.price}</h3>
-                      <button className="btn-primary" onClick={() => handleBooking(flight.id)}>Book Now</button>
+                    <h3>₹{flight.price}</h3>
+                    <button className="btn-primary" onClick={() => handleBooking(flight.id)}>Book Now</button>
                   </div>
                 </div>
               ))}

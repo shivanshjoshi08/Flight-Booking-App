@@ -13,7 +13,7 @@ function Register() {
     e.preventDefault();
     setMessage('');
     try {
-      const response = await axios.post('http://127.0.0.1:5000/api/auth/register', { name, email, password });
+      const response = await axios.post('https://flight-booking-app-t010.onrender.com/api/auth/register', { name, email, password });
       setMessage(response.data.message + " Redirecting to login...");
       // Register successful hone ke 2 second baad login page par bhej dein
       setTimeout(() => {
